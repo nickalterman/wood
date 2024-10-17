@@ -1,20 +1,7 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>My weblog</title>
-    <link rel="stylesheet" href="/statics/styles.css">
-    <script src="/statics/functions.js" ></script>
-</head>
-
 <?php
-$is_logged = $_COOKIE['is_logged'];
-$user_id = $_COOKIE['user_id'];
-
-if ($is_logged == 'true' and !is_null($user_id)){
-
+session_start();
+include 'header.php';
+if (isset($_SESSION['is_logged']) === true) {
 ?>
 <body>
     <header>
@@ -26,7 +13,7 @@ if ($is_logged == 'true' and !is_null($user_id)){
         <a href="#">Write</a>
         <a href="#">Posts</a>
         <a href="#">Settings</a>
-        <a href="#" onclick="deleteAllCookies();redirect('/login.php');">Logout (<?php echo $_COOKIE['username']?>)</a>
+        <a href="#" onclick="deleteAllCookies();redirect('/login.php');">Logout (<?php echo $_SESSION['username']?>)</a>
     </nav>
 
     <main>

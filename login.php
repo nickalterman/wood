@@ -1,18 +1,7 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>My weblog</title>
-    <link rel="stylesheet" href="/statics/styles.css">
-</head>
-
-<body>
-    
-<h1>Login</h1>
-
 <?php
+session_start();
+include 'header.php';
+echo '<h1>Login</h1>';
 include 'db.php';
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     
@@ -21,31 +10,35 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     $sql = "SELECT * FROM users WHERE username = '$username' AND password = '$password'";
     $result = mysqli_query($conn, $sql);
+
     if ($result && mysqli_num_rows($result) == 1){
         $row = mysqli_fetch_assoc($result);
-        setcookie("is_logged", "true", time() + (7* 24 * 60 * 60), "/");
-        setcookie("username", $row['username'], time() + (7* 24 * 60 * 60), "/");
-        setcookie("user_id", $row['user_id'], time() + (7* 24 * 60 * 60), "/");
+        $_SESSION['is_logged'] = true;
+        $_SESSION['username'] = $row['username'];
+        $_SESSION['user_id'] = $row['user_id'];
         header("Location: user_panel.php");
     } else {
-    $error_message = "Invalid username or password. Please try again.";
+    $message = "Invalid username or password. Please try again.<br>if you cannor remember your password please<a href='forget_password.php?username=$username'> click here</a>";
+    $username = $_POST["username"];
     }
 }
 ?>
 <form action="login.php" method="post">
     <label for="username">Username: </label>
-    <input type="text" id="username" name="username" required><br><br>
+    <input type="text" id="username" name="username" required><br>
 
     <label for="password">Password: </label>
-    <input type="password" id="password" name="password" required><br><br>
+    <input type="password" id="password" name="password" required><br>
 
-    <input type="submit" value="Login">
+    <input type="submit" value="Login"><br>
+    <a href='register.php'>need a registration?</a><br>
 </form>
-<?php if(!is_null($error_message)){
-    echo "<p>$error_message</p>";
-} ?>
-</body>
-<footer>
-    <p>&copy; 2024 My Website</p>
-</footer>
-</html>
+<?php
+if(array_key_exists('msg', $_GET)){
+    $message = $_GET['msg'];
+}
+if(isset($message)){
+    echo "<p>$message</p>";
+}
+include 'footer.php';
+?>
