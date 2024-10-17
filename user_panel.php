@@ -12,8 +12,8 @@ if (isset($_SESSION['is_logged']) === true) {
         <a href="#">Panel</a>
         <a href="#">Write</a>
         <a href="#">Posts</a>
-        <a href="#">Settings</a>
-        <a href="#" onclick="deleteAllCookies();redirect('/login.php');">Logout (<?php echo $_SESSION['username']?>)</a>
+        <a href="settings.php">Settings</a>
+        <a href="logout.php">Logout (<?php echo $_SESSION['username']?>)</a>
     </nav>
 
     <main>
