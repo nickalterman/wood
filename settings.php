@@ -52,9 +52,10 @@ if (isset($_SESSION['is_logged']) === true) {
     </header>
 
     <nav>
+        <a href="index.php">Main</a>
         <a href="user_panel.php">Panel</a>
-        <a href="#">Write</a>
-        <a href="#">Posts</a>
+        <a href="write_post.php">Write</a>
+        <a href="my_posts.php">Posts</a>
         <a href="settings.php">Settings</a>
         <a href="logout.php">Logout (<?php echo $_SESSION['username']?>)</a>
     </nav>

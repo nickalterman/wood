@@ -15,7 +15,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     
     if ($result === true) {
 
-        $sql = "UPDATE users SET `token` = 'null' WHERE username = '$username'";
+        $sql = "UPDATE users SET `token` = NULL WHERE username = '$username'";
         $token_null = mysqli_query($conn, $sql);
 
         header("Location: login.php?msg=the new password has been set succssefully");

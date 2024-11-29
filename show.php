@@ -2,6 +2,12 @@
 session_start();
 include 'header.php';
 include 'db.php';
+
+
+$sql = "SELECT * FROM `posts` where post_id = " . $_GET['post_id'];
+$result = mysqli_query($conn, $sql);
+$row = mysqli_fetch_assoc($result);
+
 ?>
 
     <nav>
@@ -12,8 +18,8 @@ include 'db.php';
 
     <main>
         <section>
-            <h2>Blog system</h2>
-            <p>the most sophisticated sytem to share thoughts, feel free to use our website with no cost</p>
+            <h2><?php echo $row['title'];?></h2>
+            <p><?php echo $row['content'];?></p>
         </section>
     </main>
 

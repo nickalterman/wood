@@ -1,7 +1,12 @@
 <?php
 session_start();
 include 'header.php';
+include 'db.php';
 if (isset($_SESSION['is_logged']) === true) {
+
+    $sql = "SELECT * FROM posts where author_id	= " . $_SESSION['user_id'];
+    $result = mysqli_query($conn, $sql);
+    $rows = mysqli_fetch_all($result);
 ?>
 <body>
     <header>
@@ -16,14 +21,26 @@ if (isset($_SESSION['is_logged']) === true) {
         <a href="settings.php">Settings</a>
         <a href="logout.php">Logout (<?php echo $_SESSION['username']?>)</a>
     </nav>
-
     <main>
         <section>
-            <h2>welcome to panel</h2>
-            <p>hello <?php echo $_SESSION['username'] ?></p>
+            <h2>my blog posts</h2>
         </section>
-    </main>
 
+        <?php
+            foreach($rows as $row){
+                echo '- ',$row[1],', published in: ', $row[5], ' | <a href="/view_post.php?post_id=' . $row[0] . '"> view</a>',' <a href="/edit_post.php?post_id=' . $row[0] . '"> edit</a> <a href="/delete_post.php?post_id=' . $row[0] . '"> delete</a><br>';
+            }
+
+            echo "<br>";
+
+            if(array_key_exists('msg', $_GET)){
+                $message = $_GET['msg'];
+            }
+            if(isset($message)){
+                echo "<p>$message</p>";
+            }
+        ?>
+    </main>
 
     <?php } else { ?>
 
